@@ -34,9 +34,6 @@ int divceil(int x, int y){
 
 class Solution{
 public:
-    int divceil(int x, int y){
-        return 1 + ((x - 1) / y);
-    }
     int majorityElement(vector <int> &nums){
         sort(nums.begin(), nums.end());
         int n = (int)nums.size();
