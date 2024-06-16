@@ -35,15 +35,13 @@ int divceil(int x, int y){
 class Solution{
 public:
     int majorityElement(vector <int> &nums){
-        int candidate = -1e9-7;
-        int count = 0;
+        int candidate = -1e9-7, count = 0;
         for (int i : nums){
             if (i != candidate){
-                if (count == 0){
-                    count = 1;
+                count--;
+                if (count < 0){
                     candidate = i;
-                }else{
-                    count--;
+                    count = -count;
                 }
             }else{
                 count++;
