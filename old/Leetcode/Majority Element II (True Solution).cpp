@@ -38,21 +38,21 @@ public:
         int candidate[2] = {(int)-1e9-7, (int)-1e9-7}, count[2] = {0, 0};
         vector<int> output;
         int n = (int)nums.size(), lim = n / 3;
-        int hash_length = 0;
         for (int val : nums){
             bool fitted = false;
-            for (int i = 0; i < 2; i++){
-                if (candidate[i] == val){
-                    count[i]++;
-                    fitted = true;
-                    break;
-                }
-            }
-            if (!fitted){
+            if (candidate[0] != val && candidate[1] != val){
                 for (int i = 0; i < 2; i++){
                     if (count[i] <= 0){
                         candidate[i] = val;
                         count[i] = 1;
+                        fitted = true;
+                        break;
+                    }
+                }
+            }else{
+                for (int i = 0; i < 2; i++){
+                    if (candidate[i] == val){
+                        count[i]++;
                         fitted = true;
                         break;
                     }
@@ -62,15 +62,12 @@ public:
                 for (int i = 0; i < 2; i++) count[i]--;
             }
         }
-        for (int i = 0; i < 2; i++){
-            if (count[i] > 0){
-                int true_count = 0;
-                for (int val : nums){
-                    true_count += (val == candidate[i])? 1 : 0;
-                    if (true_count > lim){
-                        output.push_back(candidate[i]);
-                        break;
-                    }
+        int true_count[2] = {};
+        for (int val : nums){
+            for (int i = 0; i < 2; i++){
+                if (count[i] > 0 && val == candidate[i]){
+                    true_count[i]++;
+                    if (true_count[i] == lim + 1) output.push_back(candidate[i]);
                 }
             }
         }
